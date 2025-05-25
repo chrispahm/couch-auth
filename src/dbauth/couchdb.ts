@@ -59,10 +59,10 @@ export class CouchAdapter implements DBAdapter {
     };
     // required when using Cloudant or other db than `_users`
     newKey.password_scheme = 'pbkdf2';
-    newKey.iterations = 10;
+    newKey.iterations = 600000;
     newKey = {
       ...newKey,
-      ...(await hashCouchPassword(password))
+      ...(await hashCouchPassword(password, newKey.iterations))
     };
 
     try {
