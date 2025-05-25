@@ -90,7 +90,7 @@ export interface SecurityConfig {
    * Number of iterations for pbkdf2 password hashing, starting with the
    * supplied dates. The first entry is the timestamp, the second number the
    * number of iterations that should be used from this timestamp until the
-   * next timestamp in the array. Default: `undefined` uses only 10 iterations.
+   * next timestamp in the array. Default: `undefined` uses 10 iterations.
    */
   iterations?: [number, number][];
   /**

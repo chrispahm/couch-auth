@@ -62,7 +62,7 @@ export class CouchAdapter implements DBAdapter {
     newKey.iterations = 10;
     newKey = {
       ...newKey,
-      ...(await hashCouchPassword(password))
+      ...(await hashCouchPassword(password, newKey.iterations))
     };
 
     try {

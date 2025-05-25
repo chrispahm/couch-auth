@@ -3,10 +3,12 @@ import { Config } from './types/config';
 import { HashResult, LocalHashObj } from './types/typings';
 import { URLSafeUUID } from './util';
 
-const pwd = new pwdModule();
+const pwdOld = new pwdModule();
+const pwdNew = new pwdModule(600000, 32, 16, 'hex', 'sha256');
 
-export function hashCouchPassword(password: string): Promise<HashResult> {
+export function hashCouchPassword(password: string, iterations: number): Promise<HashResult> {
   return new Promise(function (resolve, reject) {
+    const pwd = iterations < 600000 ? pwdOld : pwdNew;
     pwd.hash(password, function (err, salt, hash) {
       if (err) {
         return reject(err);
@@ -36,8 +38,8 @@ export class Hashing {
     });
   }
 
-  private getHasherForTimestamp(ts: number = undefined) {
-    let ret = pwd;
+  private getHasherForTimestamp(ts: number = undefined, iterations: number = 10): pwdModule {
+    let ret = iterations < 600000 ? pwdOld : pwdNew;
     if (this.times.length === 0 || ts === undefined) {
       return ret;
     }
@@ -78,7 +80,7 @@ export class Hashing {
     }
 
     return new Promise((resolve, reject) => {
-      const hasher = this.getHasherForTimestamp(created);
+      const hasher = this.getHasherForTimestamp(created, hashObj?.iterations);
       hasher.hash(pw, salt, (err, hash) => {
         if (err) {
           return reject(err);

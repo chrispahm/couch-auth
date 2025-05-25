@@ -57,6 +57,7 @@ export interface HashResult {
    * (`security.iterations`) that matches the creation date.
    */
   created?: number;
+  iterations?: number;
 }
 
 export interface LocalHashObj extends HashResult {
