@@ -53,7 +53,7 @@ export interface HashResult {
   derived_key?: string;
   /**
    * timestamp of the creation of this HashResult. If `undefined`, the default
-   * iteration number (600000) is used, else the value specified in the config
+   * iteration number (10) is used, else the value specified in the config
    * (`security.iterations`) that matches the creation date.
    */
   created?: number;

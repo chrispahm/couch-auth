@@ -38,7 +38,7 @@ export class Hashing {
     });
   }
 
-  private getHasherForTimestamp(ts: number = undefined, iterations: number = 600000): pwdModule {
+  private getHasherForTimestamp(ts: number = undefined, iterations: number = 10): pwdModule {
     let ret = iterations < 600000 ? pwdOld : pwdNew;
     if (this.times.length === 0 || ts === undefined) {
       return ret;
